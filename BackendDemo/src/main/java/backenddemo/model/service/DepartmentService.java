@@ -10,4 +10,13 @@ public class DepartmentService {
   public Department findDepartmentByID(int ID) {
       return facade.findDepartmentByID(ID);
   }
+
+  public Department findDepartmentWithEmployees(int ID)  {
+      return facade.findDepartmentWithEmployees(ID);
+  }
+
+    public static void main(String[] args) {
+        Department testDepartment = new DepartmentService().findDepartmentWithEmployees(30);
+        System.out.println(testDepartment);
+    }
 }

@@ -8,7 +8,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class EmployeeRepository {
-    private DepartmentRepository deptRepo = new DepartmentRepository();
+    private DepartmentRepository deptRepo;
+
+    public void setDeptRepo(DepartmentRepository deptRepo) {
+        this.deptRepo = deptRepo;
+    }
 
     public ArrayList<Employee> findAllEmployeesWithoutDeptInfo() {
         ArrayList<Employee> employees = new ArrayList<>();
@@ -89,11 +93,9 @@ public class EmployeeRepository {
         int sal = rs.getInt("sal");
         return new Employee(empno, eName, job, hireDate, sal, null);
     }
+
     public void loadDepartmentData(Employee employee, ResultSet rs) throws SQLException {
-        int empno = rs.getInt("deptno");
-        String eName = rs.getString("dname");
-        String job = rs.getString("loc");
-        employee.addDepartment(deptRepo.loadRow(rs));
+         employee.addDepartment(deptRepo.loadRow(rs));
     }
 
 }

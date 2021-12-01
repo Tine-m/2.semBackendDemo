@@ -7,8 +7,15 @@ import java.util.ArrayList;
 
 public class DataFacade {
 
-    DepartmentRepository deptRepo = new DepartmentRepository();
-    EmployeeRepository empRepo = new EmployeeRepository();
+    DepartmentRepository deptRepo;
+    EmployeeRepository empRepo;
+
+    public DataFacade() {
+        this.empRepo = new EmployeeRepository();
+        this.deptRepo = new DepartmentRepository();
+        empRepo.setDeptRepo(deptRepo);
+        deptRepo.setEmpRepo(empRepo);
+    }
 
     public Department findDepartmentByID(int ID) {
         return deptRepo.findDepartmentByID(ID);
@@ -24,5 +31,9 @@ public class DataFacade {
 
     public ArrayList<Employee> findEmployeesByDepartmentName(String departmentName) {
         return empRepo.findEmployeesByDepartmentName(departmentName);
+    }
+
+    public Department findDepartmentWithEmployees(int ID) {
+        return deptRepo.findDepartmentWithEmployees(ID);
     }
 }
