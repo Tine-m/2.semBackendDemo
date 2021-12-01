@@ -15,7 +15,7 @@ public class DepartmentRepository {
             ResultSet rs = statement.executeQuery(sql);
 
             if (rs.next()) {
-                Department department = load(rs);
+                Department department = loadRow(rs);
                 return department;
             }
 
@@ -26,7 +26,9 @@ public class DepartmentRepository {
         return null;
     }
 
-    public Department load(ResultSet rs) throws SQLException {
+
+
+    public Department loadRow(ResultSet rs) throws SQLException {
         int deptno = rs.getInt("deptno");
         String dname = rs.getString("dname");
         String loc = rs.getString("loc");

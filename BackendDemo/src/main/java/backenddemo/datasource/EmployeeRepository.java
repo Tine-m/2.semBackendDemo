@@ -21,7 +21,7 @@ public class EmployeeRepository {
             Employee emp;
 
             while (rs.next()) {
-                emp = load(rs);
+                emp = loadRow(rs);
                 employees.add(emp);
             }
         } //TODO error handling with custom exception type
@@ -44,9 +44,9 @@ public class EmployeeRepository {
             Department dept;
 
             while (rs.next()) {
-                emp = load(rs);
-                dept = deptRepo.load(rs);
-                emp.setDept(dept);
+                emp = loadRow(rs);
+                dept = deptRepo.loadRow(rs);
+                emp.addDepartment(dept);
                 employees.add(emp);
             }
         } catch (SQLException e) {
@@ -56,14 +56,44 @@ public class EmployeeRepository {
         return employees;
     }
 
-    public Employee load(ResultSet rs) throws SQLException {
+    public ArrayList<Employee> findEmployeesByDepartmentName(String departmentName) {
+        ArrayList<Employee> employees = new ArrayList<>();
+        try {
+            Connection connection = DBManager.getConnection();
+            String sql = "SELECT * FROM emp NATURAL JOIN dept where dname = ? ";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, departmentName);
+            ResultSet rs = ps.executeQuery();
+
+            Employee employee;
+            Department department;
+
+            while (rs.next()) {
+                employee = loadRow(rs);
+                loadDepartmentData(employee, rs);
+                employees.add(employee);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return employees;
+    }
+
+    public Employee loadRow(ResultSet rs) throws SQLException {
         int empno = rs.getInt("empno");
         String eName = rs.getString("ename");
         String job = rs.getString("job");
         Date _hireDate = rs.getDate("hiredate");
         LocalDate hireDate = _hireDate.toLocalDate();
         int sal = rs.getInt("sal");
-
         return new Employee(empno, eName, job, hireDate, sal, null);
     }
+    public void loadDepartmentData(Employee employee, ResultSet rs) throws SQLException {
+        int empno = rs.getInt("deptno");
+        String eName = rs.getString("dname");
+        String job = rs.getString("loc");
+        employee.addDepartment(deptRepo.loadRow(rs));
+    }
+
 }

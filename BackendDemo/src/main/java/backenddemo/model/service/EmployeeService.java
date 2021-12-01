@@ -15,4 +15,8 @@ public class EmployeeService {
     public List<Employee> findAllEmployeesWithDeptInfo() {
         return facade.findAllEmployeesWithDeptInfo();
     }
+
+    public List<Employee> findEmployeesByDepartmentName(String departmentName) {
+        return facade.findEmployeesByDepartmentName(departmentName);
+    }
 }

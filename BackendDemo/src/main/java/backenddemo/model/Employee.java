@@ -23,7 +23,7 @@ public class Employee {
         this(empno, eName, job, hireDate, sal, null);
     }
 
-    public void setDept(Department dept) {
+    public void addDepartment(Department dept) {
         this.dept = dept;
     }
 

@@ -21,4 +21,8 @@ public class DataFacade {
     public ArrayList<Employee> findAllEmployeesWithDeptInfo() {
         return empRepo.findAllEmployeesWithDeptInfo();
     }
+
+    public ArrayList<Employee> findEmployeesByDepartmentName(String departmentName) {
+        return empRepo.findEmployeesByDepartmentName(departmentName);
+    }
 }
