@@ -14,7 +14,6 @@ public class DataFacade {
         this.empRepo = new EmployeeRepository();
         this.deptRepo = new DepartmentRepository();
         empRepo.setDeptRepo(deptRepo);
-        deptRepo.setEmpRepo(empRepo);
     }
 
     public Department findDepartmentByID(int ID) {
@@ -31,9 +30,5 @@ public class DataFacade {
 
     public ArrayList<Employee> findEmployeesByDepartmentName(String departmentName) {
         return empRepo.findEmployeesByDepartmentName(departmentName);
-    }
-
-    public Department findDepartmentWithEmployees(int ID) {
-        return deptRepo.findDepartmentWithEmployees(ID);
     }
 }
